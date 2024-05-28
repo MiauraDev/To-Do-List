@@ -1,0 +1,29 @@
+.AddTaskContainer {
+  border: solid var(--secondary) 4px;
+  border-radius: 5rem;
+  display: flex;
+  justify-content: baseline;
+  padding: 8px 0px 8px 12px;
+  gap: 20px;
+  font-weight: 600;
+  align-items: center;
+}
+
+button {
+  width: 25px;
+  height: 25px;
+  background-image: url(../../assets/icons/add.svg);
+  background-color: var(--white);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-weight: 800;
+  border-radius: 5rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.2);
+}

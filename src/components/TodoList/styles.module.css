@@ -1,0 +1,22 @@
+.TodoList {
+  max-height: 164px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  list-style-type: none;
+  direction: rtl;
+  padding: 0;
+}
+
+.TodoList::-webkit-scrollbar {
+  width: 0;
+}
+
+.TodoList::-webkit-scrollbar-track {
+  scrollbar-width: none;
+}
+
+.TodoList::-webkit-scrollbar-thumb {
+  background: none;
+}

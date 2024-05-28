@@ -1,0 +1,30 @@
+.TodoItem-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 5rem;
+  border: solid 2px var(--secondary);
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.TodoItem-delete {
+  cursor: pointer;
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.TodoItem-check {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.TodoItem-text {
+  padding-left: 20px;
+  flex-grow: 1;
+  font-size: 16px;
+  text-align: left;
+}

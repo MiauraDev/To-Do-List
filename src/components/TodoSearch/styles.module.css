@@ -1,0 +1,26 @@
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 1rem;
+  height: 2rem;
+  border-radius: 2rem;
+  border: 2px solid var(--black);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.search:focus {
+  border: solid 2px var(--primary);
+  outline: none;
+}
