@@ -14,10 +14,10 @@ const defaultTodos = [
   { id: 3, Text: 'Estudiar', completed: false },
   { id: 4, Text: 'Estudiar', completed: false },
   { id: 5, Text: 'Estudiar', completed: false },
-  { id: 6, Text: 'Estudiar', completed: false }
+  { id: 6, Text: 'Estudiar', completed: false },
 ]
 
-function App () {
+function App() {
   const [todos, setTodos] = useState(defaultTodos)
 
   const handleToggle = (id) => {
@@ -30,9 +30,9 @@ function App () {
 
   return (
     <>
-      <div className='app-container'>
+      <div className="app-container">
         <Header />
-        <div className='app-content'>
+        <div className="app-content">
           <div>
             <TodoSearch />
             <TodoList>
@@ -46,7 +46,7 @@ function App () {
               ))}
             </TodoList>
           </div>
-          <div className='content-right'>
+          <div className="content-right">
             <TodoCounter
               completed={todos.filter((todo) => todo.completed).length}
               total={todos.length}

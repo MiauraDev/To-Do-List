@@ -1,37 +1,34 @@
-export default {
+// eslint-disable-next-line no-undef
+module.exports = {
   root: true,
   env: {
     browser: true,
-    es2020: true
+    es2020: true,
   },
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended'
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
-    ecmaVersion: 12,
-    sourceType: 'module'
+    ecmaVersion: 2020,
+    sourceType: "module",
   },
-  plugins: [
-    'react-refresh',
-    '@typescript-eslint',
-    'react'
-  ],
+  plugins: ["react-refresh", "@typescript-eslint", "react"],
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true }
-    ]
+    "react-refresh/only-export-components": [
+      "warn",
+      { allowConstantExport: true },
+    ],
   },
   settings: {
     react: {
-      version: 'detect'
-    }
-  }
-}
+      version: "detect",
+    },
+  },
+};
