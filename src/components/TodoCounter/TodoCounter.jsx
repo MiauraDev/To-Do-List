@@ -1,8 +1,8 @@
-import React from "react";
-import styles from "./styles.module.css";
-import { ProgressCircle } from "./ProgressCircle";
+import React from 'react'
+import styles from './styles.module.css'
+import { ProgressCircle } from './ProgressCircle'
 
-function TodoCounter({ total, completed }) {
+function TodoCounter ({ total, completed }) {
   return (
     <div className={styles.ProgressContainer}>
       <div>
@@ -16,7 +16,7 @@ function TodoCounter({ total, completed }) {
         <ProgressCircle total={total} completed={completed} />
       </div>
     </div>
-  );
+  )
 }
 
-export { TodoCounter };
+export { TodoCounter }

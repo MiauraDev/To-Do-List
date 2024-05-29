@@ -1,12 +1,12 @@
-import styles from "./styles.module.css";
-import React from "react";
+import styles from './styles.module.css'
+import React from 'react'
 
-function Footer() {
+function Footer () {
   return (
     <footer>
       <p className={styles.footer}>Made with 🩷 by Laura Luque</p>
     </footer>
-  );
+  )
 }
 
-export { Footer };
+export { Footer }

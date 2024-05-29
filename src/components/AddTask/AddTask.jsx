@@ -1,12 +1,12 @@
-import styles from "./styles.module.css";
+import styles from './styles.module.css'
 
-function CreateTodoButton() {
+function CreateTodoButton () {
   return (
     <div className={styles.AddTaskContainer}>
-      <button></button>
+      <button />
       <p>Add a new Task</p>
     </div>
-  );
+  )
 }
 
-export { CreateTodoButton };
+export { CreateTodoButton }
