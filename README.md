@@ -1,1 +1,1 @@
-# Repositorio base del Curso React.js en Platzi
+# Repositorio base de Platzi
