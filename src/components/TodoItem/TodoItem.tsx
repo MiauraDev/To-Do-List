@@ -49,7 +49,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
         onClick={onComplete}
         style={{
           backgroundImage: `url(${
-            completed ? '/sicheck.svg' : '/nocheck.svg'
+            completed ? '/icons/sicheck.svg' : '/icons/nocheck.svg'
           })`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',

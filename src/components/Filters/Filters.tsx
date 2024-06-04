@@ -1,5 +1,5 @@
 import styles from './styles.module.css'
-import iconfilter from '../../assets/icons/filters.png'
+import iconfilter from '/icons/filters.png'
 import React, { useState } from 'react'
 
 interface FiltersProps {

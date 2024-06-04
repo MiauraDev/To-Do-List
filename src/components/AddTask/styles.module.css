@@ -1,7 +1,7 @@
 .AddTask {
   width: 25px;
   height: 25px;
-  background-image: url(../../assets/icons/add.svg);
+  background-image: url(/icons/add.svg);
   background-color: var(--white);
   background-size: cover;
   background-position: center;

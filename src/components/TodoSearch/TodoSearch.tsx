@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react'
 import styles from './styles.module.css'
-import searchIcon from '../../assets/icons/search.svg'
+import searchIcon from '/icons/search.svg'
 
 interface TodoSearchProps {
   searchValue: string

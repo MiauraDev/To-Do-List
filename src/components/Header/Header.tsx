@@ -1,7 +1,7 @@
 import styles from './styles.module.css'
 import React from 'react'
-import githubImg from '../../assets/icons/linkedin.svg'
-import linkedinImg from '../../assets/icons/github.svg'
+import githubImg from '/icons/linkedin.svg'
+import linkedinImg from '/icons/github.svg'
 
 const Header: React.FC = () => {
   return (
