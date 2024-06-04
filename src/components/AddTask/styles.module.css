@@ -1,3 +1,20 @@
+.AddTask {
+  width: 25px;
+  height: 25px;
+  background-image: url(../../assets/icons/add.svg);
+  background-color: var(--white);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.AddTask:hover {
+  transform: scale(1.2);
+}
+
 .AddTaskContainer {
   border: solid var(--secondary) 4px;
   border-radius: 5rem;
@@ -9,21 +26,92 @@
   align-items: center;
 }
 
-button {
+.Container {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  position: absolute;
+  bottom: 370px;
+  right: 68px;
+  background-color: var(--white);
+  padding: 10px;
+  border: 2px solid var(--secondary);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 10px;
+}
+
+.InputContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.NewTask {
   width: 25px;
   height: 25px;
-  background-image: url(../../assets/icons/add.svg);
+  background-image: url(../../assets/icons/newTask.png);
   background-color: var(--white);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  font-weight: 800;
-  border-radius: 5rem;
   border: none;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
 }
 
-button:hover {
+.NewTask:hover {
   transform: scale(1.2);
+}
+
+.TaskInput {
+  padding: 8px;
+  border: 1px solid var(--secondary);
+  border-radius: 4px;
+  width: 200px;
+}
+
+.PriorityContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.Priority {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.PriorityLabel {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.PriorityLabel input {
+  margin-right: 5px;
+}
+
+.Urgent {
+  accent-color: #ff5757;
+}
+
+.Important {
+  accent-color: #009ce4;
+}
+
+.NotUrgent {
+  accent-color: #00aa55;
+}
+
+@media (width >=768px) {
+  .Container {
+    height: 92px;
+    bottom: 0px;
+    top: 310px;
+    right: 200px;
+  }
 }

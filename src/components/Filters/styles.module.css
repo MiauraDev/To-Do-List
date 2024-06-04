@@ -1,0 +1,43 @@
+.iconfilter {
+  width: 26px;
+  display: flex;
+  cursor: pointer;
+}
+
+.Container {
+  position: absolute;
+  top: 185px;
+  left: 36px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  padding: 10px;
+  border: 2px solid var(--secondary);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 10px;
+}
+
+.Alphabet,
+.Creation,
+.Priority {
+  background: none;
+  font-size: 14px;
+  border: none;
+  font-weight: 600;
+}
+
+.Alphabet:hover,
+.Creation:hover,
+.Priority:hover {
+  color: var(--primary);
+  cursor: pointer;
+}
+
+@media (width >=768px) {
+  .Container {
+    top: 140px;
+    left: 495px;
+  }
+}

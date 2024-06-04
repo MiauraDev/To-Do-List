@@ -3,21 +3,45 @@
   flex-direction: column;
   padding: 20px;
   background-color: #ffffff;
-  width: 640px;
+  width: 300px;
   border-radius: 1.2rem;
   box-shadow: -4px 4px 40px 5px rgb(218, 218, 218);
 }
 
 .app-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  width: 94%;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding-bottom: 20px;
+  padding-inline: 0px;
+  padding-top: 40px;
 }
 
 .content-right {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.content-search-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-right: 8px;
+}
+
+@media (width >=768px) {
+  .app-container {
+    width: 640px;
+  }
+
+  .app-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 20px;
+    width: 94%;
+  }
 }

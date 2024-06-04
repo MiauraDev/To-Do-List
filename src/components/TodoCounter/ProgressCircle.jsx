@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 function ProgressCircle({ total, completed }) {
-  const percentage = (completed / total) * 100
+  const percentage = total === 0 ? 0 : (completed / total) * 100
   const strokeDasharray = 2 * Math.PI * 93.5
   const strokeDashoffset =
-    strokeDasharray - (strokeDasharray * percentage) / 100
+    total === 0
+      ? strokeDasharray
+      : strokeDasharray - (strokeDasharray * percentage) / 100
 
   return (
     <svg
@@ -45,7 +47,7 @@ function ProgressCircle({ total, completed }) {
         fontWeight="bold"
         style={{ transform: 'rotate(90deg) translate(0px, -203px)' }}
       >
-        {Math.round(percentage)}%
+        {total === 0 ? '---%' : `${Math.round(percentage)}%`}
       </text>
     </svg>
   )
