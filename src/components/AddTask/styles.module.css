@@ -51,7 +51,7 @@
 .NewTask {
   width: 25px;
   height: 25px;
-  background-image: url(../../assets/icons/newTask.png);
+  background-image: url(/icons/newTask.png);
   background-color: var(--white);
   background-size: cover;
   background-position: center;
