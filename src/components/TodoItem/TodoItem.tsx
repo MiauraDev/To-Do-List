@@ -1,7 +1,5 @@
 import React from 'react'
 import styles from './styles.module.css'
-import nochekIcon from '../../assets/icons/nocheck.svg'
-import sicheckIcon from '../../assets/icons/sicheck.svg'
 
 interface TodoItemProps {
   text: string
@@ -50,7 +48,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
         className={styles.TodoItemCheck}
         onClick={onComplete}
         style={{
-          backgroundImage: `url(${completed ? sicheckIcon : nochekIcon})`,
+          backgroundImage: `url(${
+            completed ? '/sicheck.svg' : '/nocheck.svg'
+          })`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
         }}
