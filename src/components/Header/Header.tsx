@@ -3,11 +3,10 @@ import React from 'react'
 import githubImg from '../../assets/icons/linkedin.svg'
 import linkedinImg from '../../assets/icons/github.svg'
 
-function Header() {
+const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <p>Welcome!</p>
-
       <nav>
         <a
           target="_blank"

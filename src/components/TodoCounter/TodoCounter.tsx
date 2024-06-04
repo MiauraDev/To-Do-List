@@ -1,9 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styles from './styles.module.css'
 import { ProgressCircle } from './ProgressCircle'
 
-function TodoCounter({ total, completed }) {
+interface TodoCounterProps {
+  total: number;
+  completed: number;
+}
+
+const TodoCounter: React.FC<TodoCounterProps> = ({ total, completed }) => {
   return (
     <div className={styles.ProgressContainer}>
       <div>
@@ -18,11 +22,6 @@ function TodoCounter({ total, completed }) {
       </div>
     </div>
   )
-}
-
-TodoCounter.propTypes = {
-  total: PropTypes.number.isRequired,
-  completed: PropTypes.number.isRequired,
 }
 
 export { TodoCounter }

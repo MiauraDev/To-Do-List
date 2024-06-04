@@ -1,23 +1,30 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, ChangeEvent } from 'react'
 import styles from './styles.module.css'
-import PropTypes from 'prop-types'
 
-function AddTask({ onAdd }) {
-  const [showInput, setShowInput] = useState(false)
-  const [newTask, setNewTask] = useState('')
-  const [priority, setPriority] = useState('')
-  const ContainerRef = useRef(null)
+interface AddTaskProps {
+  onAdd: (
+    newTask: string,
+    priority: 'Urgente' | 'Importante' | 'No urgente'
+  ) => void
+}
 
+function AddTask({ onAdd }: AddTaskProps) {
+  const [showInput, setShowInput] = React.useState<boolean>(false)
+  const [newTask, setNewTask] = useState<string>('')
+  const [priority, setPriority] = useState<
+    'Urgente' | 'Importante' | 'No urgente' | ''
+  >('')
+  const containerRef = useRef<HTMLDivElement>(null)
   const handleAddClick = () => {
     setShowInput(true)
   }
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setNewTask(event.target.value)
   }
 
-  const handlePriorityChange = (event) => {
-    setPriority(event.target.value)
+  const handlePriorityChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPriority(event.target.value as 'Urgente' | 'Importante' | 'No urgente')
   }
 
   const handleAddTask = () => {
@@ -29,8 +36,11 @@ function AddTask({ onAdd }) {
     }
   }
 
-  const handleClickOutside = (event) => {
-    if (ContainerRef.current && !ContainerRef.current.contains(event.target)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(event.target as Node)
+    ) {
       setShowInput(false)
     }
   }
@@ -46,7 +56,7 @@ function AddTask({ onAdd }) {
     <div className={styles.AddTaskContainer}>
       <button onClick={handleAddClick} className={styles.AddTask}></button>
       {showInput && (
-        <div className={styles.Container} ref={ContainerRef}>
+        <div className={styles.Container} ref={containerRef}>
           <div className={styles.InputContainer}>
             <input
               type="text"
@@ -100,10 +110,6 @@ function AddTask({ onAdd }) {
       <p>Add a new Task</p>
     </div>
   )
-}
-
-AddTask.propTypes = {
-  onAdd: PropTypes.func.isRequired,
 }
 
 export { AddTask }

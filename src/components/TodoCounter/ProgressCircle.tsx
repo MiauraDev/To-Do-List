@@ -1,7 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-function ProgressCircle({ total, completed }) {
+interface ProgressCircleProps {
+  total: number;
+  completed: number;
+}
+
+const ProgressCircle: React.FC<ProgressCircleProps> = ({
+  total,
+  completed,
+}) => {
   const percentage = total === 0 ? 0 : (completed / total) * 100
   const strokeDasharray = 2 * Math.PI * 93.5
   const strokeDashoffset =
@@ -51,11 +58,6 @@ function ProgressCircle({ total, completed }) {
       </text>
     </svg>
   )
-}
-
-ProgressCircle.propTypes = {
-  total: PropTypes.number.isRequired,
-  completed: PropTypes.number.isRequired,
 }
 
 export { ProgressCircle }

@@ -1,10 +1,19 @@
 import styles from './styles.module.css'
-import PropTypes from 'prop-types'
 import iconfilter from '../../assets/icons/filters.png'
 import React, { useState } from 'react'
 
-function Filters({ onFilterAlphabet, onFilterCreation, onFilterPriority }) {
-  const [showContainer, setShowContainer] = useState(false)
+interface FiltersProps {
+  onFilterAlphabet: () => void
+  onFilterCreation: () => void
+  onFilterPriority: () => void
+}
+
+const Filters: React.FC<FiltersProps> = ({
+  onFilterAlphabet,
+  onFilterCreation,
+  onFilterPriority,
+}) => {
+  const [showContainer, setShowContainer] = useState<boolean>(false)
 
   const handleIconClick = () => {
     setShowContainer(!showContainer)
@@ -35,12 +44,6 @@ function Filters({ onFilterAlphabet, onFilterCreation, onFilterPriority }) {
       )}
     </div>
   )
-}
-
-Filters.propTypes = {
-  onFilterAlphabet: PropTypes.func.isRequired,
-  onFilterCreation: PropTypes.func.isRequired,
-  onFilterPriority: PropTypes.func.isRequired,
 }
 
 export { Filters }

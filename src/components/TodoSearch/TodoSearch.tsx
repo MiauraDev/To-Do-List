@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import styles from './styles.module.css'
-import PropTypes from 'prop-types'
 import searchIcon from '../../assets/icons/search.svg'
 
-function TodoSearch({ searchValue, setSearchValue }) {
+interface TodoSearchProps {
+  searchValue: string
+  setSearchValue: (value: string) => void
+}
+
+const TodoSearch: React.FC<TodoSearchProps> = ({
+  searchValue,
+  setSearchValue,
+}) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value)
+  }
+
   return (
     <div className={styles['search-container']}>
       <img
@@ -16,17 +27,10 @@ function TodoSearch({ searchValue, setSearchValue }) {
         placeholder="Search your task..."
         className={styles.search}
         value={searchValue}
-        onChange={(event) => {
-          setSearchValue(event.target.value)
-        }}
+        onChange={handleChange}
       />
     </div>
   )
-}
-
-TodoSearch.propTypes = {
-  searchValue: PropTypes.string.isRequired,
-  setSearchValue: PropTypes.func.isRequired,
 }
 
 export { TodoSearch }

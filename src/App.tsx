@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react'
 import Confetti from 'react-confetti'
-
 import './App.css'
 import { TodoCounter } from './components/TodoCounter/TodoCounter'
 import { TodoSearch } from './components/TodoSearch/TodoSearch'
@@ -11,35 +10,42 @@ import { Header } from './components/Header/Header'
 import { Footer } from './components/Footer/Footer'
 import { Filters } from './components/Filters/Filters'
 
-const defaultTodos = [
+interface Todo {
+  id: number
+  Text: string
+  completed: boolean
+  priority: 'Urgente' | 'Importante' | 'No urgente'
+}
+
+const defaultTodos: Todo[] = [
   { id: 1, Text: 'MY', completed: false, priority: 'Urgente' },
   { id: 2, Text: 'TO-DO', completed: true, priority: 'Importante' },
   { id: 3, Text: 'LIST', completed: false, priority: 'No urgente' },
 ]
 
-const getSavedTodos = () => {
+const getSavedTodos = (): Todo[] => {
   const savedTodos = localStorage.getItem('todos')
   return savedTodos ? JSON.parse(savedTodos) : defaultTodos
 }
 
-function App() {
-  const [searchValue, setSearchValue] = useState('')
-  const [showConfetti, setShowConfetti] = useState(false)
-  const [todos, setTodos] = useState(getSavedTodos)
-  const [filter, setFilter] = useState(null)
-  const [isAsc, setIsAsc] = useState(true)
+function App(): JSX.Element {
+  const [searchValue, setSearchValue] = React.useState<string>('')
+  const [showConfetti, setShowConfetti] = React.useState<boolean>(false)
+  const [todos, setTodos] = React.useState<Todo[]>(getSavedTodos)
+  const [filter, setFilter] = React.useState<string | null>(null)
+  const [isAsc, setIsAsc] = useState<boolean>(true)
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos))
   }, [todos])
 
-  const completedTodos = useMemo(
+  const completedTodos: number = useMemo(
     () => todos.filter((todo) => todo.completed).length,
     [todos]
   )
-  const totalTodos = useMemo(() => todos.length, [todos])
+  const totalTodos: number = useMemo(() => todos.length, [todos])
 
-  const searchedTodos = useMemo(() => {
+  const searchedTodos: Todo[] = useMemo(() => {
     return todos.filter((todo) =>
       todo.Text.toLowerCase().includes(searchValue.toLowerCase())
     )
@@ -59,7 +65,7 @@ function App() {
     }
   }, [completedTodos, totalTodos])
 
-  const completeTodo = useCallback((id) => {
+  const completeTodo = useCallback((id: number) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -67,24 +73,24 @@ function App() {
     )
   }, [])
 
-  const deleteTodo = useCallback((id) => {
+  const deleteTodo = useCallback((id: number) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id))
   }, [])
 
-  const addTodo = useCallback((text, priority) => {
+  const addTodo = useCallback((text: string, priority: string) => {
     setTodos((prevTodos) => [
       {
         id: prevTodos.length + 1,
         Text: text,
         completed: false,
-        priority: priority,
+        priority: priority as 'Urgente' | 'Importante' | 'No urgente',
       },
       ...prevTodos,
     ])
   }, [])
 
   const handleFilter = useCallback(
-    (criteria) => {
+    (criteria: string) => {
       if (filter === criteria) {
         setIsAsc((prevIsAsc) => !prevIsAsc)
       } else {
@@ -95,8 +101,12 @@ function App() {
     [filter]
   )
 
-  const sortedTodos = useMemo(() => {
-    const priorities = { Urgente: 1, Importante: 2, 'No urgente': 3 }
+  const sortedTodos: Todo[] = useMemo(() => {
+    const priorities: { [key: string]: number } = {
+      Urgente: 1,
+      Importante: 2,
+      'No urgente': 3,
+    }
     return [...searchedTodos].sort((a, b) => {
       if (filter === 'alphabet') {
         return isAsc
@@ -114,7 +124,6 @@ function App() {
       return 0
     })
   }, [searchedTodos, filter, isAsc])
-
   return (
     <>
       <div className="app-container">

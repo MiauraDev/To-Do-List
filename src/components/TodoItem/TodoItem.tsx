@@ -1,11 +1,26 @@
 import React from 'react'
 import styles from './styles.module.css'
-import PropTypes from 'prop-types'
 import nochekIcon from '../../assets/icons/nocheck.svg'
 import sicheckIcon from '../../assets/icons/sicheck.svg'
 
-function TodoItem({ text, completed, onComplete, onDelete, priority }) {
-  const getPriorityClass = () => {
+interface TodoItemProps {
+  text: string
+  completed: boolean
+  priority: 'Urgente' | 'Importante' | 'No urgente'
+  onComplete: () => void
+  onDelete: () => void
+  className?: string
+}
+
+const TodoItem: React.FC<TodoItemProps> = ({
+  text,
+  completed,
+  onComplete,
+  onDelete,
+  priority,
+  className,
+}: TodoItemProps) => {
+  const getPriorityClass = (): string => {
     if (priority === 'Urgente') return styles.Urgent
     if (priority === 'Importante') return styles.Important
     if (priority === 'No urgente') return styles.NotUrgent
@@ -13,7 +28,7 @@ function TodoItem({ text, completed, onComplete, onDelete, priority }) {
   }
 
   return (
-    <li className={styles.TodoItemContainer}>
+    <li className={`${styles.TodoItemContainer} ${className}`}>
       <span className={styles.TodoItemDelete} onClick={onDelete}>
         ✕
       </span>
@@ -31,7 +46,6 @@ function TodoItem({ text, completed, onComplete, onDelete, priority }) {
       >
         {text}
       </p>
-
       <span
         className={styles.TodoItemCheck}
         onClick={onComplete}
@@ -43,14 +57,6 @@ function TodoItem({ text, completed, onComplete, onDelete, priority }) {
       />
     </li>
   )
-}
-
-TodoItem.propTypes = {
-  text: PropTypes.string.isRequired,
-  completed: PropTypes.bool.isRequired,
-  onComplete: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  priority: PropTypes.string.isRequired,
 }
 
 export { TodoItem }
