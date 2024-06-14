@@ -19,8 +19,71 @@ const Filters: React.FC<FiltersProps> = ({
 }) => {
   const [showContainer, setShowContainer] = useState<boolean>(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const dragState = useRef({
+    startX: 0,
+    startY: 0,
+    offsetX: 0,
+    offsetY: 0,
+    dragging: false,
+  })
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleMouseDown = (e: MouseEvent) => {
+    e.preventDefault()
+    dragState.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      offsetX: containerRef.current!.offsetLeft,
+      offsetY: containerRef.current!.offsetTop,
+      dragging: true,
+    }
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
+  }
+
+  const handleTouchStart = (e: TouchEvent) => {
+    if (e.touches.length !== 1) return
+    dragState.current = {
+      startX: e.touches[0].clientX,
+      startY: e.touches[0].clientY,
+      offsetX: containerRef.current!.offsetLeft,
+      offsetY: containerRef.current!.offsetTop,
+      dragging: true,
+    }
+    document.addEventListener('touchmove', handleTouchMove, { passive: false })
+    document.addEventListener('touchend', handleTouchEnd)
+  }
+
+  const handleMouseMove = (e: MouseEvent) => {
+    e.preventDefault()
+    if (!dragState.current.dragging) return
+    const dx = e.clientX - dragState.current.startX
+    const dy = e.clientY - dragState.current.startY
+    containerRef.current!.style.left = `${dragState.current.offsetX + dx}px`
+    containerRef.current!.style.top = `${dragState.current.offsetY + dy}px`
+  }
+
+  const handleTouchMove = (e: TouchEvent) => {
+    e.preventDefault()
+    if (!dragState.current.dragging || e.touches.length !== 1) return
+    const dx = e.touches[0].clientX - dragState.current.startX
+    const dy = e.touches[0].clientY - dragState.current.startY
+    containerRef.current!.style.left = `${dragState.current.offsetX + dx}px`
+    containerRef.current!.style.top = `${dragState.current.offsetY + dy}px`
+  }
+
+  const handleMouseUp = () => {
+    dragState.current.dragging = false
+    document.removeEventListener('mousemove', handleMouseMove)
+    document.removeEventListener('mouseup', handleMouseUp)
+  }
+
+  const handleTouchEnd = () => {
+    dragState.current.dragging = false
+    document.removeEventListener('touchmove', handleTouchMove)
+    document.removeEventListener('touchend', handleTouchEnd)
+  }
+
+  const handleClickOutside = (event: MouseEvent | TouchEvent) => {
     if (
       containerRef.current &&
       !containerRef.current.contains(event.target as Node)
@@ -31,62 +94,14 @@ const Filters: React.FC<FiltersProps> = ({
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside, {
+      passive: true,
+    })
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
     }
   }, [])
-
-  useEffect(() => {
-    const elmnt = containerRef.current
-    if (!elmnt) return
-
-    let pos1 = 0,
-      pos2 = 0,
-      pos3 = 0,
-      pos4 = 0
-
-    const header = document.getElementById(elmnt.id + 'header')
-    if (header) {
-      header.onmousedown = dragMouseDown
-    } else {
-      elmnt.onmousedown = dragMouseDown
-    }
-
-    function dragMouseDown(e: MouseEvent) {
-      e.preventDefault()
-      pos3 = e.clientX
-      pos4 = e.clientY
-      document.onmouseup = closeDragElement
-      document.onmousemove = elementDrag
-    }
-
-    function elementDrag(e: MouseEvent) {
-      e.preventDefault()
-      pos1 = pos3 - e.clientX
-      pos2 = pos4 - e.clientY
-      pos3 = e.clientX
-      pos4 = e.clientY
-      if (elmnt) {
-        elmnt.style.top = elmnt.offsetTop - pos2 + 'px'
-        elmnt.style.left = elmnt.offsetLeft - pos1 + 'px'
-      }
-    }
-
-    function closeDragElement() {
-      document.onmouseup = null
-      document.onmousemove = null
-    }
-
-    return () => {
-      if (header) {
-        header.onmousedown = null
-      } else {
-        elmnt.onmousedown = null
-      }
-      document.onmouseup = null
-      document.onmousemove = null
-    }
-  }, [showContainer])
 
   const handleIconClick = () => {
     setShowContainer(!showContainer)
@@ -107,7 +122,11 @@ const Filters: React.FC<FiltersProps> = ({
       />
       {showContainer && (
         <div className={styles.Container} ref={containerRef} id="mydiv">
-          <div id="mydivheader" className={styles.mydivheader}></div>
+          <div
+            className={styles.mydivheader}
+            onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
+          ></div>
           <div className={styles.filters}>
             <p>Filtrar por:</p>
             <button className={styles.Alphabet} onClick={onFilterAlphabet}>
