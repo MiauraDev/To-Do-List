@@ -27,6 +27,7 @@ body {
   width: 100%;
   animation: color-change-3x 10s infinite;
   transition: background-color 1s ease-in-out;
+  overflow: hidden;
 }
 
 @-webkit-keyframes color-change-3x {

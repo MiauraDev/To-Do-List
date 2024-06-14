@@ -45,7 +45,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd, todos }) => {
 
   const adjustContainerHeight = (textareaHeight: number) => {
     if (containerRef.current) {
-      containerRef.current.style.maxHeight = `${textareaHeight + 80}px`
+      containerRef.current.style.maxHeight = `${textareaHeight + 130}px`
     }
   }
 
@@ -90,11 +90,64 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd, todos }) => {
     }
   }, [])
 
+  useEffect(() => {
+    const elmnt = containerRef.current
+    if (!elmnt) return
+
+    let pos1 = 0,
+      pos2 = 0,
+      pos3 = 0,
+      pos4 = 0
+
+    const header = document.getElementById(elmnt.id + 'header')
+    if (header) {
+      header.onmousedown = dragMouseDown
+    } else {
+      elmnt.onmousedown = dragMouseDown
+    }
+
+    function dragMouseDown(e: MouseEvent) {
+      e.preventDefault()
+      pos3 = e.clientX
+      pos4 = e.clientY
+      document.onmouseup = closeDragElement
+      document.onmousemove = elementDrag
+    }
+
+    function elementDrag(e: MouseEvent) {
+      e.preventDefault()
+      pos1 = pos3 - e.clientX
+      pos2 = pos4 - e.clientY
+      pos3 = e.clientX
+      pos4 = e.clientY
+      if (elmnt) {
+        elmnt.style.top = elmnt.offsetTop - pos2 + 'px'
+        elmnt.style.left = elmnt.offsetLeft - pos1 + 'px'
+      }
+    }
+
+    function closeDragElement() {
+      document.onmouseup = null
+      document.onmousemove = null
+    }
+
+    return () => {
+      if (header) {
+        header.onmousedown = null
+      } else {
+        elmnt.onmousedown = null
+      }
+      document.onmouseup = null
+      document.onmousemove = null
+    }
+  }, [showInput])
+
   return (
     <div className={styles.AddTaskContainer} onClick={handleAddClick}>
       <button className={styles.AddTask}></button>
       {showInput && (
-        <div className={`${styles.Container}`} ref={containerRef}>
+        <div className={`${styles.Container}`} ref={containerRef} id="mydiv">
+          <div id="mydivheader" className={styles.mydivheader}></div>
           <div className={styles.InputContainer}>
             <textarea
               ref={textareaRef}
