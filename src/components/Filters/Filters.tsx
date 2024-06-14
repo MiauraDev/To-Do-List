@@ -27,7 +27,7 @@ const Filters: React.FC<FiltersProps> = ({
     dragging: false,
   })
 
-  const handleMouseDown = (e: MouseEvent) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     dragState.current = {
       startX: e.clientX,
@@ -40,7 +40,7 @@ const Filters: React.FC<FiltersProps> = ({
     document.addEventListener('mouseup', handleMouseUp)
   }
 
-  const handleTouchStart = (e: TouchEvent) => {
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (e.touches.length !== 1) return
     dragState.current = {
       startX: e.touches[0].clientX,
