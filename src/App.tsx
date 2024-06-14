@@ -28,11 +28,13 @@ const getSavedTodos = (): Todo[] => {
   return savedTodos ? JSON.parse(savedTodos) : defaultTodos
 }
 
-function App(): JSX.Element {
-  const [searchValue, setSearchValue] = React.useState<string>('')
-  const [showConfetti, setShowConfetti] = React.useState<boolean>(false)
-  const [todos, setTodos] = React.useState<Todo[]>(getSavedTodos)
-  const [filter, setFilter] = React.useState<string | null>(null)
+const App: React.FC = () => {
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [showConfetti, setShowConfetti] = useState<boolean>(false)
+  const [todos, setTodos] = useState<Todo[]>(getSavedTodos)
+  const [filter, setFilter] = useState<
+    'alphabet' | 'creation' | 'priority' | null
+  >(null)
   const [isAsc, setIsAsc] = useState<boolean>(true)
 
   useEffect(() => {
@@ -43,6 +45,7 @@ function App(): JSX.Element {
     () => todos.filter((todo) => todo.completed).length,
     [todos]
   )
+
   const totalTodos: number = useMemo(() => todos.length, [todos])
 
   const searchedTodos: Todo[] = useMemo(() => {
@@ -77,20 +80,34 @@ function App(): JSX.Element {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id))
   }, [])
 
-  const addTodo = useCallback((text: string, priority: string) => {
-    setTodos((prevTodos) => [
-      {
-        id: prevTodos.length + 1,
-        Text: text,
-        completed: false,
-        priority: priority as 'Urgente' | 'Importante' | 'No urgente',
-      },
-      ...prevTodos,
-    ])
-  }, [])
+  const addTodo = useCallback(
+    (text: string, priority: 'Urgente' | 'Importante' | 'No urgente') => {
+      if (!text.trim()) {
+        alert('El texto de la tarea no puede estar vacío.')
+        return
+      }
+
+      const todoExists = todos.some(
+        (todo) => todo.Text.toLowerCase() === text.toLowerCase()
+      )
+
+      if (!todoExists) {
+        const newTodo: Todo = {
+          id: Date.now(),
+          Text: text,
+          completed: false,
+          priority: priority,
+        }
+        setTodos((prevTodos) => [newTodo, ...prevTodos])
+      } else {
+        alert('¡Esta tarea ya existe!')
+      }
+    },
+    [todos]
+  )
 
   const handleFilter = useCallback(
-    (criteria: string) => {
+    (criteria: 'alphabet' | 'creation' | 'priority') => {
       if (filter === criteria) {
         setIsAsc((prevIsAsc) => !prevIsAsc)
       } else {
@@ -107,6 +124,7 @@ function App(): JSX.Element {
       Importante: 2,
       'No urgente': 3,
     }
+
     return [...searchedTodos].sort((a, b) => {
       if (filter === 'alphabet') {
         return isAsc
@@ -124,6 +142,7 @@ function App(): JSX.Element {
       return 0
     })
   }, [searchedTodos, filter, isAsc])
+
   return (
     <>
       <div className="app-container">
@@ -139,6 +158,8 @@ function App(): JSX.Element {
                 onFilterAlphabet={() => handleFilter('alphabet')}
                 onFilterCreation={() => handleFilter('creation')}
                 onFilterPriority={() => handleFilter('priority')}
+                isAsc={isAsc}
+                filter={filter}
               />
             </div>
             <TodoList>
@@ -157,7 +178,7 @@ function App(): JSX.Element {
           </div>
           <div className="content-right">
             <TodoCounter completed={completedTodos} total={totalTodos} />
-            <AddTask onAdd={addTodo} />
+            <AddTask onAdd={addTodo} todos={todos} />{' '}
           </div>
         </div>
       </div>
@@ -170,3 +191,6 @@ function App(): JSX.Element {
 }
 
 export default App
+
+
+

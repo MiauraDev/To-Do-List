@@ -1,26 +1,52 @@
-import React, { useState, useRef, useEffect, ChangeEvent } from 'react'
+import React, { useState, useEffect, useRef, ChangeEvent } from 'react'
 import styles from './styles.module.css'
+
+interface Todo {
+  id: number
+  Text: string
+  completed: boolean
+  priority: 'Urgente' | 'Importante' | 'No urgente'
+}
 
 interface AddTaskProps {
   onAdd: (
     newTask: string,
     priority: 'Urgente' | 'Importante' | 'No urgente'
   ) => void
+  todos: Todo[]
 }
 
-function AddTask({ onAdd }: AddTaskProps) {
-  const [showInput, setShowInput] = React.useState<boolean>(false)
+const AddTask: React.FC<AddTaskProps> = ({ onAdd, todos }) => {
+  const [showInput, setShowInput] = useState<boolean>(false)
   const [newTask, setNewTask] = useState<string>('')
   const [priority, setPriority] = useState<
     'Urgente' | 'Importante' | 'No urgente' | ''
   >('')
   const containerRef = useRef<HTMLDivElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
   const handleAddClick = () => {
     setShowInput(true)
   }
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setNewTask(event.target.value)
+    autoResizeTextarea(event.target)
+  }
+
+  const autoResizeTextarea = (textarea: HTMLTextAreaElement | null) => {
+    if (textarea) {
+      textarea.style.height = 'auto'
+      const newHeight = Math.min(textarea.scrollHeight, 40)
+      textarea.style.height = `${newHeight}px`
+      adjustContainerHeight(newHeight)
+    }
+  }
+
+  const adjustContainerHeight = (textareaHeight: number) => {
+    if (containerRef.current) {
+      containerRef.current.style.maxHeight = `${textareaHeight + 80}px`
+    }
   }
 
   const handlePriorityChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,12 +54,24 @@ function AddTask({ onAdd }: AddTaskProps) {
   }
 
   const handleAddTask = () => {
-    if (newTask.trim() && priority) {
-      onAdd(newTask, priority)
-      setNewTask('')
-      setPriority('')
-      setShowInput(false)
+    const taskExists = todos.some(
+      (todo) => todo.Text?.toLowerCase() === newTask.toLowerCase()
+    )
+
+    if (taskExists) {
+      alert('¡La tarea ya existe!')
+      return
     }
+
+    if (!newTask.trim() || !priority) {
+      alert('Completa nombre y prioridad de tu tarea...')
+      return
+    }
+
+    onAdd(newTask, priority)
+    setNewTask('')
+    setPriority('')
+    setShowInput(false)
   }
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -53,17 +91,18 @@ function AddTask({ onAdd }: AddTaskProps) {
   }, [])
 
   return (
-    <div className={styles.AddTaskContainer}>
-      <button onClick={handleAddClick} className={styles.AddTask}></button>
+    <div className={styles.AddTaskContainer} onClick={handleAddClick}>
+      <button className={styles.AddTask}></button>
       {showInput && (
-        <div className={styles.Container} ref={containerRef}>
+        <div className={`${styles.Container}`} ref={containerRef}>
           <div className={styles.InputContainer}>
-            <input
-              type="text"
+            <textarea
+              ref={textareaRef}
               value={newTask}
               onChange={handleInputChange}
               placeholder="Enter new task..."
               className={styles.TaskInput}
+              maxLength={108}
             />
             <button onClick={handleAddTask} className={styles.NewTask}></button>
           </div>

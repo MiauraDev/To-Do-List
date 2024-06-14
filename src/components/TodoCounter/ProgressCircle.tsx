@@ -1,8 +1,8 @@
 import React from 'react'
 
 interface ProgressCircleProps {
-  total: number;
-  completed: number;
+  total: number
+  completed: number
 }
 
 const ProgressCircle: React.FC<ProgressCircleProps> = ({
@@ -20,10 +20,9 @@ const ProgressCircle: React.FC<ProgressCircleProps> = ({
     <svg
       width="157"
       height="157"
-      viewBox="-25.875 -25.875 258.75 258.75"
+      viewBox="0 0 207 207"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ transform: 'rotate(-90deg)' }}
     >
       <circle
         r="93.5"
@@ -47,12 +46,14 @@ const ProgressCircle: React.FC<ProgressCircleProps> = ({
         fill="transparent"
       />
       <text
-        x="60px"
-        y="119px"
+        x="103.5"
+        y="103.5"
         fill="#ff6aa0"
         fontSize="48px"
         fontWeight="bold"
-        style={{ transform: 'rotate(90deg) translate(0px, -203px)' }}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        transform="rotate(0 103.5 103.5)"
       >
         {total === 0 ? '---%' : `${Math.round(percentage)}%`}
       </text>
