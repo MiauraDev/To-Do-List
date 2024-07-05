@@ -140,7 +140,7 @@
   accent-color: #00aa55;
 }
 
-@media (min-width: 768px) {
+@media (width >=768px) {
   .Container {
     bottom: 0px;
     top: 460px;
