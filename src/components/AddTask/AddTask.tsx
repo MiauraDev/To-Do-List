@@ -5,13 +5,13 @@ interface Todo {
   id: number
   Text: string
   completed: boolean
-  priority: 'Urgente' | 'Importante' | 'No urgente'
+  priority: 'Urgent' | 'Important' | 'Not urgent'
 }
 
 interface AddTaskProps {
   onAdd: (
     newTask: string,
-    priority: 'Urgente' | 'Importante' | 'No urgente'
+    priority: 'Urgent' | 'Important' | 'Not urgent'
   ) => void
   todos: Todo[]
 }
@@ -20,7 +20,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd, todos }) => {
   const [showInput, setShowInput] = useState<boolean>(false)
   const [newTask, setNewTask] = useState<string>('')
   const [priority, setPriority] = useState<
-    'Urgente' | 'Importante' | 'No urgente' | ''
+    'Urgent' | 'Important' | 'Not urgent' | ''
   >('')
   const containerRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -50,7 +50,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd, todos }) => {
   }
 
   const handlePriorityChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPriority(event.target.value as 'Urgente' | 'Importante' | 'No urgente')
+    setPriority(event.target.value as 'Urgent' | 'Important' | 'Not urgent')
   }
 
   const handleAddTask = () => {
@@ -64,7 +64,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd, todos }) => {
     }
 
     if (!newTask.trim() || !priority) {
-      alert('Completa nombre y prioridad de tu tarea...')
+      alert('Enter name and priority of your task...')
       return
     }
 
@@ -160,40 +160,40 @@ const AddTask: React.FC<AddTaskProps> = ({ onAdd, todos }) => {
             <button onClick={handleAddTask} className={styles.NewTask}></button>
           </div>
           <div className={styles.PriorityContainer}>
-            <p>Prioridad:</p>
+            <p>Priority:</p>
             <div className={styles.Priority}>
               <label className={styles.PriorityLabel}>
                 <input
                   type="radio"
                   name="priority"
-                  value="Urgente"
-                  checked={priority === 'Urgente'}
+                  value="Urgent"
+                  checked={priority === 'Urgent'}
                   onChange={handlePriorityChange}
                   className={styles.Urgent}
                 />
-                Urgente
+                Urgent
               </label>
               <label className={styles.PriorityLabel}>
                 <input
                   type="radio"
                   name="priority"
-                  value="Importante"
-                  checked={priority === 'Importante'}
+                  value="Important"
+                  checked={priority === 'Important'}
                   onChange={handlePriorityChange}
                   className={styles.Important}
                 />
-                Importante
+                Important
               </label>
               <label className={styles.PriorityLabel}>
                 <input
                   type="radio"
                   name="priority"
-                  value="No urgente"
-                  checked={priority === 'No urgente'}
+                  value="Not urgent"
+                  checked={priority === 'Not urgent'}
                   onChange={handlePriorityChange}
                   className={styles.NotUrgent}
                 />
-                No urgente
+                Not urgent
               </label>
             </div>
           </div>

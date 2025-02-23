@@ -128,15 +128,15 @@ const Filters: React.FC<FiltersProps> = ({
             onTouchStart={handleTouchStart}
           ></div>
           <div className={styles.filters}>
-            <p>Filtrar por:</p>
+            <p>Filter by:</p>
             <button className={styles.Alphabet} onClick={onFilterAlphabet}>
-              Alfabeto {filter === 'alphabet' && getEmoji()}
+            Alphabet {filter === 'alphabet' && getEmoji()}
             </button>
             <button className={styles.Creation} onClick={onFilterCreation}>
-              Creación {filter === 'creation' && getEmoji()}
+            Creation {filter === 'creation' && getEmoji()}
             </button>
             <button className={styles.Priority} onClick={onFilterPriority}>
-              Prioridad {filter === 'priority' && getEmoji()}
+            Priority {filter === 'priority' && getEmoji()}
             </button>
           </div>
         </div>

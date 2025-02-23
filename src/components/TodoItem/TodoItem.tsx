@@ -4,7 +4,7 @@ import styles from './styles.module.css'
 interface TodoItemProps {
   text: string
   completed: boolean
-  priority: 'Urgente' | 'Importante' | 'No urgente'
+  priority: 'Urgent' | 'Important' | 'Not urgent'
   onComplete: () => void
   onDelete: () => void
   className?: string
@@ -19,9 +19,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
   className,
 }: TodoItemProps) => {
   const getPriorityClass = (): string => {
-    if (priority === 'Urgente') return styles.Urgent
-    if (priority === 'Importante') return styles.Important
-    if (priority === 'No urgente') return styles.NotUrgent
+    if (priority === 'Urgent') return styles.Urgent
+    if (priority === 'Important') return styles.Important
+    if (priority === 'Not urgent') return styles.NotUrgent
     return ''
   }
 

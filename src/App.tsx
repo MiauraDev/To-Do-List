@@ -14,13 +14,13 @@ interface Todo {
   id: number
   Text: string
   completed: boolean
-  priority: 'Urgente' | 'Importante' | 'No urgente'
+  priority: 'Urgent' | 'Important' | 'Not urgent'
 }
 
 const defaultTodos: Todo[] = [
-  { id: 1, Text: 'MY', completed: false, priority: 'Urgente' },
-  { id: 2, Text: 'TO-DO', completed: true, priority: 'Importante' },
-  { id: 3, Text: 'LIST', completed: false, priority: 'No urgente' },
+  { id: 1, Text: 'MY', completed: false, priority: 'Urgent' },
+  { id: 2, Text: 'TO-DO', completed: true, priority: 'Important' },
+  { id: 3, Text: 'LIST', completed: false, priority: 'Not urgent' },
 ]
 
 const getSavedTodos = (): Todo[] => {
@@ -47,7 +47,7 @@ const App: React.FC = () => {
   )
 
   const totalTodos: number = useMemo(() => todos.length, [todos])
-
+ 
   const searchedTodos: Todo[] = useMemo(() => {
     return todos.filter((todo) =>
       todo.Text.toLowerCase().includes(searchValue.toLowerCase())
@@ -81,9 +81,9 @@ const App: React.FC = () => {
   }, [])
 
   const addTodo = useCallback(
-    (text: string, priority: 'Urgente' | 'Importante' | 'No urgente') => {
+    (text: string, priority: 'Urgent' | 'Important' | 'Not urgent') => {
       if (!text.trim()) {
-        alert('El texto de la tarea no puede estar vacío.')
+        alert('Task text cannot be empty.')
         return
       }
 
@@ -100,7 +100,7 @@ const App: React.FC = () => {
         }
         setTodos((prevTodos) => [newTodo, ...prevTodos])
       } else {
-        alert('¡Esta tarea ya existe!')
+        alert('¡This task already exists!')
       }
     },
     [todos]
@@ -120,9 +120,9 @@ const App: React.FC = () => {
 
   const sortedTodos: Todo[] = useMemo(() => {
     const priorities: { [key: string]: number } = {
-      Urgente: 1,
-      Importante: 2,
-      'No urgente': 3,
+      Urgent: 1,
+      Important: 2,
+      'Not urgent': 3,
     }
 
     return [...searchedTodos].sort((a, b) => {
